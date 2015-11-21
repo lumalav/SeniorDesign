@@ -9,11 +9,31 @@ var retryAfterSeconds = 3;
 $(document).ready(function ()
 {
     $(document).on("click", "#fileUpload", beginUpload);
-    $("#progressBar").progressbar(0);
+
+
+    $('#validator').bootstrapValidator({
+        live: 'enabled',
+        feedbackIcons: {
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fileupload: {
+                validators: {
+                   file: {
+                       extension: 'fcs',
+                       type: 'text/plain',
+                       message: 'The selected file is not valid. The file extension should be .fcs'
+                   }
+                }
+            }
+        }
+    });
 });
 
 var beginUpload = function ()
 {
+    $("#progressBar").css("width", parseInt(0) + "%");
     var fileControl = document.getElementById("selectFile");
     if (fileControl.files.length > 0)
     {
@@ -114,9 +134,13 @@ var sendFile = function (file, chunkSize)
 
             return;
         }).done(function (notice)
-        {
+        {       
             if (notice.error || notice.isLastBlock)
             {
+                if (notice.isLastBlock)
+                {
+                    $("#progressBar").css("width", "100%");
+                }
                 displayStatusMessage(notice.message);
                 return;
             }
@@ -144,8 +168,7 @@ var updateProgress = function ()
     var progress = currentChunk / numberOfBlocks * 100;
     if (progress <= 100)
     {
-        $("#progressBar").progressbar("option", "value", parseInt(progress));
+        $("#progressBar").css("width", parseInt(progress) + "%");
         displayStatusMessage("Uploaded " + progress + "%");
     }
-
 }

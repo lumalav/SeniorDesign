@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace _3DCytoFlow
 {
@@ -24,11 +23,15 @@ namespace _3DCytoFlow
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrapValidator.min.js",
+                      "~/Scripts/respond.js",
+                      "~/Scripts/metisMenu.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/bootstrapValidator.min.css",
+                      "~/Content/metisMenu.css"));
         }
     }
 }

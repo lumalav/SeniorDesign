@@ -1,13 +1,13 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace _3DCytoFlow.Models
 {
     public class CloudFilesModel
     {
-        public CloudFilesModel()
-            : this(null)
+        public CloudFilesModel(): this(null)
         {
             Files = new List<CloudFile>();
         }
@@ -17,19 +17,14 @@ namespace _3DCytoFlow.Models
             Files = new List<CloudFile>();
             try
             {
-                if (list != null)
+                if (list == null) return;
+
+                foreach (var info in list.Select(CloudFile.CreateFromIListBlobItem).Where(info => info != null))
                 {
-                    foreach (var item in list)
-                    {
-                        CloudFile info = CloudFile.CreateFromIListBlobItem(item);
-                        if (info != null)
-                        {
-                            Files.Add(info);
-                        }
-                    }
+                    Files.Add(info);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Ignore Errors when empty
             }
