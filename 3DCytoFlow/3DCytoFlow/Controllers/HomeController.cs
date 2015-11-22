@@ -9,12 +9,19 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.RetryPolicies;
+using Twilio;
 using _3DCytoFlow.Models;
 
 namespace _3DCytoFlow.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Twilio information
+        /// </summary>
+        const string Greeting = "Hi User! This is 3DCytoFlow giving you an update of your recent request.";
+        const string AccountSid = "";
+        const string AuthToken = "";
         public ActionResult Index()
         {
             //this is only needed to display the files using the container name in the index page
@@ -122,9 +129,15 @@ namespace _3DCytoFlow.Controllers
                     string.Concat((fileSizeInKb / 1024).ToString(CultureInfo.CurrentCulture), " MB") :
                     string.Concat(fileSizeInKb.ToString(CultureInfo.CurrentCulture), " KB");
 
-                model.UploadStatusMessage = string.Format(CultureInfo.CurrentCulture,
+                var message = string.Format(CultureInfo.CurrentCulture,
                     "File uploaded successfully. {0} took {1} seconds to upload",
                     fileSizeMessage, duration.TotalSeconds);
+
+                //After commiting the file. Send a confirmation to the user
+                var twilio = new TwilioRestClient(AccountSid, AuthToken);
+                twilio.SendMessage("+12027598248", "+14077163399", Greeting + "\nStatus on: " + model.FileName + "\n" + message, "");
+
+                model.UploadStatusMessage = message;
             }
             catch (StorageException e)
             {

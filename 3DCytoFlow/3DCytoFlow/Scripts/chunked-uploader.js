@@ -1,50 +1,61 @@
 ﻿/// <reference path="jquery-1.8.2.js" />
 /// <reference path="_references.js" />
+/// <reference path="~/Scripts/jquery-2.1.4.intellisense.js" />
 var maxRetries = 3;
 var blockLength = 1048576;
 var numberOfBlocks = 1;
 var currentChunk = 1;
 var retryAfterSeconds = 3;
-
+var valid = false;
 $(document).ready(function ()
 {
     $(document).on("click", "#fileUpload", beginUpload);
 
-
-    $('#validator').bootstrapValidator({
-        live: 'enabled',
+    $("#validator").bootstrapValidator({
+        live: "enabled",
         feedbackIcons: {
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
+            invalid: "glyphicon glyphicon-remove",
+            validating: "glyphicon glyphicon-refresh"
         },
         fields: {
             fileupload: {
                 validators: {
                    file: {
-                       extension: 'fcs',
-                       type: 'text/plain',
-                       message: 'The selected file is not valid. The file extension should be .fcs'
+                       extension: "fcs",
+                       type: "text/plain",
+                       message: "The selected file is not valid. The file extension should be .fcs"
                    }
                 }
             }
         }
+        })
+        .on("success.field.bv", function (e, data) {
+            data.bv.disableSubmitButtons(false);
+            valid = true;
+        })
+        .on("status.field.bv", function (e, data) {
+            // I don't want to add has-success class to valid field container
+            data.element.parents(".form-group").removeClass("has-success");
+            // I want to enable the submit button all the time
+            data.bv.disableSubmitButtons(true);
+            valid = false;
+        });
     });
-});
 
 var beginUpload = function ()
 {
-    $("#progressBar").css("width", parseInt(0) + "%");
-    var fileControl = document.getElementById("selectFile");
-    if (fileControl.files.length > 0)
-    {
-        for (var i = 0; i < fileControl.files.length; i++)
-        {
-            uploadMetaData(fileControl.files[i], i);
+    if (valid) {
+        $("#progressBar").css("width", parseInt(0) + "%");
+        var fileControl = document.getElementById("selectFile");
+        if (fileControl.files.length > 0) {
+            for (var i = 0; i < fileControl.files.length; i++) {
+                uploadMetaData(fileControl.files[i]);
+            }
         }
-    }
+    }  
 }
 
-var uploadMetaData = function (file, index)
+var uploadMetaData = function (file)
 {
     var size = file.size;
     numberOfBlocks = Math.ceil(file.size / blockLength);
@@ -54,7 +65,7 @@ var uploadMetaData = function (file, index)
     $.ajax({
         type: "POST",
         async: false,
-        url: "/Home/SetMetadata?blocksCount=" + numberOfBlocks + "&fileName=" + name + "&fileSize=" + size,
+        url: "/Home/SetMetadata?blocksCount=" + numberOfBlocks + "&fileName=" + name + "&fileSize=" + size
     }).done(function (state)
     {
         if (state === true)
@@ -73,48 +84,47 @@ var sendFile = function (file, chunkSize)
 {
     var start = 0,
         end = Math.min(chunkSize, file.size),
-        retryCount = 0,
-        sendNextChunk, fileChunk;
+        retryCount = 0, fileChunk;
     displayStatusMessage("");
 
-    sendNextChunk = function ()
+    var sendNextChunk = function ()
     {
         fileChunk = new FormData();
 
         if (file.slice)
         {
-            fileChunk.append('Slice', file.slice(start, end));
+            fileChunk.append("Slice", file.slice(start, end));
         }
         else if (file.webkitSlice)
         {
-            fileChunk.append('Slice', file.webkitSlice(start, end));
+            fileChunk.append("Slice", file.webkitSlice(start, end));
         }
         else if (file.mozSlice)
         {
-            fileChunk.append('Slice', file.mozSlice(start, end));
+            fileChunk.append("Slice", file.mozSlice(start, end));
         }
         else
         {
-            displayStatusMessage(operationType.UNSUPPORTED_BROWSER);
+            displayStatusMessage(window.operationType.UNSUPPORTED_BROWSER);
             return;
         }
-        jqxhr = $.ajax({
+        var jqxhr = $.ajax({
             async: true,
-            url: ('/Home/UploadChunk?id=' + currentChunk),
+            url: ("/Home/UploadChunk?id=" + currentChunk),
             data: fileChunk,
             cache: false,
             contentType: false,
             processData: false,
-            type: 'POST'
+            type: "POST"
         }).fail(function (request, error)
         {
-            if (error !== 'abort' && retryCount < maxRetries)
+            if (error !== "abort" && retryCount < maxRetries)
             {
                 ++retryCount;
                 setTimeout(sendNextChunk, retryAfterSeconds * 1000);
             }
 
-            if (error === 'abort')
+            if (error === "abort")
             {
                 displayStatusMessage("Aborted");
             }
@@ -123,8 +133,8 @@ var sendFile = function (file, chunkSize)
                 if (retryCount === maxRetries)
                 {
                     displayStatusMessage("Upload timed out.");
-                    resetControls();
-                    uploader = null;
+                    window.resetControls();
+                    var uploader = null;
                 }
                 else
                 {
@@ -154,7 +164,7 @@ var sendFile = function (file, chunkSize)
                 sendNextChunk();
             }
         });
-    }
+    };
     sendNextChunk();
 }
 
