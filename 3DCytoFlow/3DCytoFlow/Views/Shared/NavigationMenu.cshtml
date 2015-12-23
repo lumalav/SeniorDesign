@@ -22,6 +22,10 @@
         $("#loading").fadeIn();
     }
 
+    $(function () {
+        $('#side-menu').metisMenu();
+    });
+
 </script>
 
 <div id="wrapper">
@@ -37,26 +41,22 @@
             @Html.ActionLink("3D CytoFlow", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @onclick = "showLoadingScreen()" })
 
         </div>
-        <!-- Add Patients Button -->
-        <div class="navbar-header">
-            @Html.ActionLink("Add Patient", "Index", "Home", new { area = "" }, new { @class = "navbar-btn btn btn-primary", @style = "font-size: 14px; margin-right:10px;", @onclick = "showLoadingScreen()" })
-        </div>
-        <!-- Edit Patients Button -->
-        <div class="navbar-header">
-            @{
-                if (currentRequest == null)
-                {
-                    <a href="#" style="font-size: 14px; margin-right: 10px;" class="navbar-btn btn btn-primary" onclick="alert('Select a patient first')">Edit</a>
-                }
-                else
-                {
-                    var currentID = currentRequest.ToString();
-
-                    <a href="@Url.Action("Index", "Home", new { id = currentID })" onclick="showLoadingScreen()" style="font-size: 14px; margin-right: 10px;" class="navbar-btn btn btn-primary">Edit</a>
-                }
-            }
-
-        </div>
+@*        <!-- Edit Patients Button -->*@
+@*        <div class="navbar-header">*@
+@*            @{*@
+@*                if (currentRequest == null)*@
+@*                {*@
+@*                    <a href="#" style="font-size: 14px; margin-right: 10px;" class="navbar-btn btn btn-primary" onclick="alert('Select a patient first')">Edit</a>*@
+@*                }*@
+@*                else*@
+@*                {*@
+@*                    var currentID = currentRequest.ToString();*@
+@**@
+@*                    <a href="@Url.Action("Index", "Home", new { id = currentID })" onclick="showLoadingScreen()" style="font-size: 14px; margin-right: 10px;" class="navbar-btn btn btn-primary">Edit</a>*@
+@*                }*@
+@*            }*@
+@**@
+@*        </div>*@
         @{
             if (currentRequest != null)
             {
@@ -92,12 +92,16 @@
                         {
                             <li>
                                 <a href="#"><img src="../../Images/family6464blue.png" class="img-responsive" alt="Patients"> Patients</a>
+                                <ul class="nav">
+                                    <li><a href="#"><img src="../../Images/plus6464.png" class="img-responsive" alt="Add"> Add</a></li>
+                                    <li><a href="#"><img src="../../Images/editblue6464.png" class="img-responsive" alt="Edit"> Edit</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("UploadFile", "Home")"><img src="../../Images/upload6464blue.png" class="img-responsive" alt="Upload"> Upload Data</a>
+                                <a href="@Url.Action("UploadFile", "Home")" onclick="showLoadingScreen()"><img src="../../Images/upload6464blue.png" class="img-responsive" alt="Upload"> Upload Data</a>
                             </li>
                         }
                     }

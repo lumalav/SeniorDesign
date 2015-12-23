@@ -447,3 +447,32 @@ a:hover{
     font-size:larger;
     padding-top:80px;
 }
+@media (min-width: 768px) {
+    #side-menu li {
+        position: relative;
+    }
+
+    #side-menu > li ul {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        min-width: 200px;
+        display: none;
+    }
+
+    #side-menu li:hover > ul,
+    #side-menu li:hover > ul.collapse {
+        display: block !important;
+        height: auto !important;
+        z-index: 1000;
+        background: #f8f8f8;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 767px) {
+    section.content {
+        float: left;
+        width: 100%;
+    }
+}
