@@ -4,11 +4,164 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="x0033_DCytoFlowDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="x0033_DCytoFlowDBTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="x0033_DCytoFlowDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="x0033_DCytoFlowDBStoreContainer">
+    <EntitySet Name="Users" EntityType="x0033_DCytoFlowDB.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRoles" EntityType="x0033_DCytoFlowDB.Store.UserRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Patients" EntityType="x0033_DCytoFlowDB.Store.Patients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Analyses" EntityType="x0033_DCytoFlowDB.Store.Analyses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clusters" EntityType="x0033_DCytoFlowDB.Store.Clusters" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserRolesUser" Association="x0033_DCytoFlowDB.Store.UserRolesUser">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UserPatient" Association="x0033_DCytoFlowDB.Store.UserPatient">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="UserAnalysis" Association="x0033_DCytoFlowDB.Store.UserAnalysis">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Analysis" EntitySet="Analyses" />
+    </AssociationSet>
+    <AssociationSet Name="PatientAnalysis" Association="x0033_DCytoFlowDB.Store.PatientAnalysis">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Analysis" EntitySet="Analyses" />
+    </AssociationSet>
+    <AssociationSet Name="AnalysisCluster" Association="x0033_DCytoFlowDB.Store.AnalysisCluster">
+      <End Role="Analysis" EntitySet="Analyses" />
+      <End Role="Cluster" EntitySet="Clusters" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Middle" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DOB" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Zip" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserRole_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Patients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Middle" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DOB" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Zip" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Analyses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FcsFilePath" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FcsUploadDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ResultFilePath" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ResultDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Delta" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="Patient_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clusters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="X" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Y" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Z" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Width" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Height" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Depth" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Analysis_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserRolesUser">
+    <End Role="UserRoles" Type="x0033_DCytoFlowDB.Store.UserRoles" Multiplicity="1" />
+    <End Role="User" Type="x0033_DCytoFlowDB.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserRole_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserPatient">
+    <End Role="User" Type="x0033_DCytoFlowDB.Store.Users" Multiplicity="1" />
+    <End Role="Patient" Type="x0033_DCytoFlowDB.Store.Patients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Patient">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserAnalysis">
+    <End Role="User" Type="x0033_DCytoFlowDB.Store.Users" Multiplicity="1" />
+    <End Role="Analysis" Type="x0033_DCytoFlowDB.Store.Analyses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Analysis">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PatientAnalysis">
+    <End Role="Patient" Type="x0033_DCytoFlowDB.Store.Patients" Multiplicity="1" />
+    <End Role="Analysis" Type="x0033_DCytoFlowDB.Store.Analyses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Analysis">
+        <PropertyRef Name="Patient_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AnalysisCluster">
+    <End Role="Analysis" Type="x0033_DCytoFlowDB.Store.Analyses" Multiplicity="1" />
+    <End Role="Cluster" Type="x0033_DCytoFlowDB.Store.Clusters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Analysis">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cluster">
+        <PropertyRef Name="Analysis_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="x0033_DCytoFlowDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -137,13 +290,119 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="x0033_DCytoFlowDB" />
-        <Alias Key="Target" Value="x0033_DCytoFlowDB.Store" />
-        <EntityContainerMapping CdmEntityContainer="x0033_DCytoFlowDBContainer" StorageEntityContainer="x0033_DCytoFlowDBTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="x0033_DCytoFlowDBStoreContainer" CdmEntityContainer="x0033_DCytoFlowDBContainer">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(x0033_DCytoFlowDB.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Middle" ColumnName="Middle" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(x0033_DCytoFlowDB.UserRoles)">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patients">
+      <EntityTypeMapping TypeName="IsTypeOf(x0033_DCytoFlowDB.Patient)">
+        <MappingFragment StoreEntitySet="Patients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Middle" ColumnName="Middle" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Zip" ColumnName="Zip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Analyses">
+      <EntityTypeMapping TypeName="IsTypeOf(x0033_DCytoFlowDB.Analysis)">
+        <MappingFragment StoreEntitySet="Analyses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="FcsFilePath" ColumnName="FcsFilePath" />
+          <ScalarProperty Name="FcsUploadDate" ColumnName="FcsUploadDate" />
+          <ScalarProperty Name="ResultFilePath" ColumnName="ResultFilePath" />
+          <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
+          <ScalarProperty Name="Delta" ColumnName="Delta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clusters">
+      <EntityTypeMapping TypeName="IsTypeOf(x0033_DCytoFlowDB.Cluster)">
+        <MappingFragment StoreEntitySet="Clusters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="X" ColumnName="X" />
+          <ScalarProperty Name="Y" ColumnName="Y" />
+          <ScalarProperty Name="Z" ColumnName="Z" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Depth" ColumnName="Depth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserRolesUser" TypeName="x0033_DCytoFlowDB.UserRolesUser" StoreEntitySet="Users">
+      <EndProperty Name="UserRoles">
+        <ScalarProperty Name="Id" ColumnName="UserRole_Id" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserPatient" TypeName="x0033_DCytoFlowDB.UserPatient" StoreEntitySet="Patients">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Patient">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserAnalysis" TypeName="x0033_DCytoFlowDB.UserAnalysis" StoreEntitySet="Analyses">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Analysis">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PatientAnalysis" TypeName="x0033_DCytoFlowDB.PatientAnalysis" StoreEntitySet="Analyses">
+      <EndProperty Name="Patient">
+        <ScalarProperty Name="Id" ColumnName="Patient_Id" />
+      </EndProperty>
+      <EndProperty Name="Analysis">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AnalysisCluster" TypeName="x0033_DCytoFlowDB.AnalysisCluster" StoreEntitySet="Clusters">
+      <EndProperty Name="Analysis">
+        <ScalarProperty Name="Id" ColumnName="Analysis_Id" />
+      </EndProperty>
+      <EndProperty Name="Cluster">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -157,6 +416,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

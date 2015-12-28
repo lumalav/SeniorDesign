@@ -1,0 +1,72 @@
+﻿@model _3DCytoFlow.Analysis
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Analysis</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FcsFilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FcsFilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FcsUploadDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FcsUploadDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultFilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultFilePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Delta)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

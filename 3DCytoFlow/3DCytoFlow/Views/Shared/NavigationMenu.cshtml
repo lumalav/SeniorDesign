@@ -86,25 +86,32 @@
         <!-- /.navbar-top-links -->
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
-                    @{
-                        if (currentRequest == null)
-                        {
-                            <li>
-                                <a href="#"><img src="../../Images/family6464blue.png" class="img-responsive" alt="Patients"> Patients</a>
-                                <ul class="nav">
-                                    <li><a href="#"><img src="../../Images/plus6464.png" class="img-responsive" alt="Add"> Add</a></li>
-                                    <li><a href="#"><img src="../../Images/editblue6464.png" class="img-responsive" alt="Edit"> Edit</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("UploadFile", "Home")" onclick="showLoadingScreen()"><img src="../../Images/upload6464blue.png" class="img-responsive" alt="Upload"> Upload Data</a>
-                            </li>
-                        }
-                    }
+                <ul class="nav" id="side-menu">               
+                    <li>
+                        <a href="#"><img src="../../Images/family6464blue.png" class="img-responsive" alt="Patients"> Patients</a>
+                        <ul class="nav">
+
+                            <li><a href="@Url.Action("Create", "Patients")"><img src="../../Images/plus6464.png" class="img-responsive" alt="Add"> Add</a></li>
+
+                            @if (currentRequest == null)
+                            {
+                                <li><a href="#" onclick="alert('Select a patient first')"><img src="../../Images/editblue6464.png" class="img-responsive" alt="Edit"> Edit</a></li>
+                            }
+                            else
+                            {
+                                var currentID = currentRequest.ToString();
+                                
+                                <li><a href="@Url.Action("Edit", "Patients", new { id = currentID })"><img src="../../Images/editblue6464.png" class="img-responsive" alt="Edit"> Edit</a></li>
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("UploadFile", "Home")" onclick="showLoadingScreen()"><img src="../../Images/upload6464blue.png" class="img-responsive" alt="Upload"> Upload Data</a>
+                    </li>                
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
