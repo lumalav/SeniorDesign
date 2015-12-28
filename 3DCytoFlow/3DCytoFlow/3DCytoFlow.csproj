@@ -384,10 +384,8 @@
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
-    <Content Include="Views\Analyses\Create.cshtml" />
     <Content Include="Views\Analyses\Delete.cshtml" />
     <Content Include="Views\Analyses\Details.cshtml" />
-    <Content Include="Views\Analyses\Edit.cshtml" />
     <Content Include="Views\Analyses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
