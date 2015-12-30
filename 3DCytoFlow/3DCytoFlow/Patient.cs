@@ -23,9 +23,12 @@ namespace _3DCytoFlow
         }
     
         public int Id { get; set; }
+
         [Required]
         public string FirstName { get; set; }
+
         public string Middle { get; set; }
+
         [Required]
         public string LastName { get; set; }
 
@@ -40,7 +43,9 @@ namespace _3DCytoFlow
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Phone Number")]
         public string Phone { get; set; }
+
         public string Address { get; set; }
+
         public string City { get; set; }
 
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip")]
