@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\llavieri.CSISOFT\Documents\Senior Design\SeniorDesign\3DCytoFlow\3DCytoFlow\3DCytoFlowDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\LuisMan\Documents\GitHub\SeniorDesign\3DCytoFlow\3DCytoFlow\3DCytoFlowDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
