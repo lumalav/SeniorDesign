@@ -2,7 +2,7 @@
 using System.Net;
 using System.Web.Mvc;
 
-namespace _3DCytoFlow.Views
+namespace _3DCytoFlow.Controllers
 {
     public class AnalysesController : Controller
     {

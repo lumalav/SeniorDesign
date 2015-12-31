@@ -19,9 +19,9 @@ namespace _3DCytoFlow.Controllers
         /// <summary>
         /// Twilio information
         /// </summary>
-        const string Greeting = "Hi User! This is 3DCytoFlow giving you an update of your recent request.";
-        const string AccountSid = "";
-        const string AuthToken = "";
+        const string Greeting = "\nHi User! This is 3DCytoFlow giving you an update on your recent request";
+        const string AccountSid = "AC783d5c8576eb1aa7aa03abca29e7a488";
+        const string AuthToken = "ec8c9bdecaa381736288af8c3452e171";
         public ActionResult Index()
         {
             //this is only needed to display the files using the container name in the index page
@@ -36,7 +36,12 @@ namespace _3DCytoFlow.Controllers
 
         public ActionResult UploadFile()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("LogIn", "Account");
         }
 
         [HttpPost]
@@ -196,20 +201,6 @@ namespace _3DCytoFlow.Controllers
             container.CreateIfNotExists();
 
             return container;
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }

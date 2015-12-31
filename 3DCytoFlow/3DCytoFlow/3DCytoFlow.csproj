@@ -259,8 +259,8 @@
     <Compile Include="UserRoles.cs">
       <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\AnalysesController.cs" />
-    <Compile Include="Views\PatientsController.cs" />
+    <Compile Include="Controllers\AnalysesController.cs" />
+    <Compile Include="Controllers\PatientsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="3DCytoFlowDB.edmx.sql" />

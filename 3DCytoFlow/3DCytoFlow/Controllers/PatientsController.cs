@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
-namespace _3DCytoFlow.Views
+namespace _3DCytoFlow.Controllers
 {
     public class PatientsController : Controller
     {
@@ -35,7 +35,12 @@ namespace _3DCytoFlow.Views
         // GET: Patients/Create
         public ActionResult Create()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("LogIn", "Account");
         }
 
         // POST: Patients/Create
