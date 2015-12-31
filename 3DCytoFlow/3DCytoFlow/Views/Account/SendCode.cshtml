@@ -2,20 +2,20 @@
 @{
     ViewBag.Title = "Send";
 }
-<div id="wrapper" ng-app="validationManagementApp">
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">@ViewBag.Title.</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
 
-        @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.Hidden("rememberMe", @Model.RememberMe)
-            <h4>Send verification code</h4>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@ViewBag.Title</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("rememberMe", @Model.RememberMe)
+        <h4>Send verification code</h4>
             <hr />
             <div class="row">
                 <div class="col-md-8">
@@ -24,10 +24,10 @@
                     <input type="submit" value="Submit" class="btn btn-default" />
                 </div>
             </div>
-        }
+    }
 
-    </div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

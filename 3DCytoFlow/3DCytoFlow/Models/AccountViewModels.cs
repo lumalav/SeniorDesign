@@ -85,6 +85,7 @@ namespace _3DCytoFlow.Models
         [Display(Name = "DOB")]
         public string DOB { get; set; }
 
+        [Required]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Phone Number")]
         [Display(Name = "Cell Phone")]

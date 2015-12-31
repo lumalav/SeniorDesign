@@ -25,11 +25,14 @@ namespace _3DCytoFlow
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Display(Name = "MI")]
         public string Middle { get; set; }
 
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
@@ -48,6 +51,7 @@ namespace _3DCytoFlow
 
         public string City { get; set; }
 
+        [Display(Name = "Zipcode")]
         [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip")]
         public string Zip { get; set; }
         public virtual User User { get; set; }
