@@ -7,9 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace _3DCytoFlow
 {
     using System;
@@ -17,38 +14,31 @@ namespace _3DCytoFlow
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Patients = new HashSet<Patient>();
             this.Analyses = new HashSet<Analysis>();
+            this.Patients = new HashSet<Patient>();
         }
     
         public int Id { get; set; }
-
         public string FirstName { get; set; }
-
         public string Middle { get; set; }
-
         public string LastName { get; set; }
-
-        public string DOB { get; set; }
-
-        public string Login { get; set; }     
-
+        public System.DateTime DOB { get; set; }
+        public string Login { get; set; }
         public string Password { get; set; }
-
         public string Email { get; set; }
-        
         public string Phone { get; set; }
-  
         public string Address { get; set; }
-
         public string City { get; set; }
-
         public string Zip { get; set; }
+        public int UserRole_Id { get; set; }
     
-        public virtual UserRoles UserRole { get; set; }
-        public virtual ICollection<Patient> Patients { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Analysis> Analyses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Patient> Patients { get; set; }
+        public virtual UserRole UserRole { get; set; }
     }
 }

@@ -14,21 +14,25 @@ namespace _3DCytoFlow
     
     public partial class Analysis
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Analysis()
         {
             this.Clusters = new HashSet<Cluster>();
         }
     
         public int Id { get; set; }
-        public string Date { get; set; }
+        public System.DateTime Date { get; set; }
         public string FcsFilePath { get; set; }
         public string FcsUploadDate { get; set; }
         public string ResultFilePath { get; set; }
-        public string ResultDate { get; set; }
-        public string Delta { get; set; }
+        public System.DateTime ResultDate { get; set; }
+        public double Delta { get; set; }
+        public int User_Id { get; set; }
+        public int Patient_Id { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual Patient Patient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cluster> Clusters { get; set; }
+        public virtual Patient Patient { get; set; }
+        public virtual User User { get; set; }
     }
 }

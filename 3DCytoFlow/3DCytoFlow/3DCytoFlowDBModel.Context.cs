@@ -13,10 +13,10 @@ namespace _3DCytoFlow
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class x0033_DCytoFlowDBContainer : DbContext
+    public partial class CytoFlowDBContext : DbContext
     {
-        public x0033_DCytoFlowDBContainer()
-            : base("name=x0033_DCytoFlowDBContainer")
+        public CytoFlowDBContext()
+            : base("name=CytoFlowDBContext")
         {
         }
     
@@ -25,10 +25,10 @@ namespace _3DCytoFlow
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserRoles> UserRoles { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Analysis> Analyses { get; set; }
         public virtual DbSet<Cluster> Clusters { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace _3DCytoFlow.Controllers
 {
     public class PatientsController : Controller
     {
-        private readonly x0033_DCytoFlowDBContainer _db = new x0033_DCytoFlowDBContainer();
+        private readonly CytoFlowDBContext _db = new CytoFlowDBContext();
 
         // GET: Patients
         public ActionResult Index()

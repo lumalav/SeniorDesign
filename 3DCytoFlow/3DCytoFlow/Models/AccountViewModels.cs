@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace _3DCytoFlow.Models
@@ -83,7 +84,7 @@ namespace _3DCytoFlow.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "DOB")]
-        public string DOB { get; set; }
+        public DateTime DOB { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]

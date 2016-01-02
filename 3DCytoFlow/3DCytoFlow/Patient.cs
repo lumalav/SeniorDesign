@@ -7,9 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-
 namespace _3DCytoFlow
 {
     using System;
@@ -17,44 +14,26 @@ namespace _3DCytoFlow
     
     public partial class Patient
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Patient()
         {
             this.Analyses = new HashSet<Analysis>();
         }
     
         public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
-        [Display(Name = "MI")]
         public string Middle { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        [Required]
-        [DataType(DataType.Date)]
-        public string DOB { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
+        public System.DateTime DOB { get; set; }
         public string Email { get; set; }
-
-        [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Phone Number")]
         public string Phone { get; set; }
-
         public string Address { get; set; }
-
         public string City { get; set; }
-
-        [Display(Name = "Zipcode")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid Zip")]
         public string Zip { get; set; }
-        public virtual User User { get; set; }
+        public int User_Id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Analysis> Analyses { get; set; }
+        public virtual User User { get; set; }
     }
 }

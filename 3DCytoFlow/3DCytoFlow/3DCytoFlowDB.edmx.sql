@@ -33,7 +33,7 @@ CREATE TABLE [dbo].[Users] (
     [FirstName] nvarchar(max)  NOT NULL,
     [Middle] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [DOB] nvarchar(max)  NOT NULL,
+    [DOB] datetime NOT NULL,
     [Login] nvarchar(max)  NOT NULL,
     [Password] nvarchar(max)  NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE [dbo].[Patients] (
     [FirstName] nvarchar(max)  NOT NULL,
     [Middle] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [DOB] nvarchar(max)  NOT NULL,
+    [DOB] datetime NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
     [Phone] nvarchar(max)  NOT NULL,
     [Address] nvarchar(max)  NOT NULL,
@@ -71,12 +71,12 @@ GO
 -- Creating table 'Analyses'
 CREATE TABLE [dbo].[Analyses] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Date] nvarchar(max)  NOT NULL,
+    [Date] datetime NOT NULL,
     [FcsFilePath] nvarchar(max)  NOT NULL,
     [FcsUploadDate] nvarchar(max)  NOT NULL,
     [ResultFilePath] nvarchar(max)  NOT NULL,
-    [ResultDate] nvarchar(max)  NOT NULL,
-    [Delta] nvarchar(max)  NOT NULL,
+    [ResultDate] datetime NOT NULL,
+    [Delta] float NOT NULL,
     [User_Id] int  NOT NULL,
     [Patient_Id] int  NOT NULL
 );
@@ -86,12 +86,12 @@ GO
 CREATE TABLE [dbo].[Clusters] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [X] nvarchar(max)  NOT NULL,
-    [Y] nvarchar(max)  NOT NULL,
-    [Z] nvarchar(max)  NOT NULL,
-    [Width] nvarchar(max)  NOT NULL,
-    [Height] nvarchar(max)  NOT NULL,
-    [Depth] nvarchar(max)  NOT NULL,
+    [X] float  NOT NULL,
+    [Y] float  NOT NULL,
+    [Z] float  NOT NULL,
+    [Width] float NOT NULL,
+    [Height] float NOT NULL,
+    [Depth] float NOT NULL,
     [Analysis_Id] int  NOT NULL
 );
 GO

@@ -76,7 +76,14 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="#"><img src="../../Images/log_out.png" class="img-responsive" alt="Logout"> Logout</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="@Url.Action("LogOff", "Account" )"><img src="../../Images/log_out.png" class="img-responsive" alt="Logout"> Logout</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("LogIn", "Account" )"><img src="" class="img-responsive"> Login</a>
+                        }
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -120,7 +127,7 @@
                     </li>
                     <li>
                         <a href="@Url.Action("UploadFile", "Home")" onclick="showLoadingScreen()"><img src="../../Images/upload6464blue.png" class="img-responsive" alt="Upload"> Upload Data</a>
-                    </li>                
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

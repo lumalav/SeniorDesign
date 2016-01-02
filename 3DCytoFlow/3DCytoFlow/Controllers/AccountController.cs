@@ -15,6 +15,7 @@ namespace _3DCytoFlow.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly CytoFlowDBContext _db = new CytoFlowDBContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -151,11 +152,36 @@ namespace _3DCytoFlow.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var applicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(applicationUser, model.Password);
+
+                var user = new User
+                {
+                    FirstName = model.FirstName,
+                    Middle = model.Middle,
+                    LastName = model.LastName,
+                    Address = model.WorkAddress,
+                    City = model.City,
+                    Zip = model.Zip,
+            //        DOB = model.DOB,
+                    Email = model.Email,
+                    Password = model.Password,
+                    Phone = model.Phone
+                };
+                
+                
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+
+
+
+
+
+
+
+
+                    await SignInManager.SignInAsync(applicationUser, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

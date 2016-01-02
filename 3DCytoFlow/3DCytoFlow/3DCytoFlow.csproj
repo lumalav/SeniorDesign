@@ -211,23 +211,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3DCytoFlowDB.Context.cs">
+    <Compile Include="3DCytoFlowDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDB.Context.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="3DCytoFlowDB.cs">
+    <Compile Include="3DCytoFlowDBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="3DCytoFlowDB.Designer.cs">
+    <Compile Include="3DCytoFlowDBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDB.edmx</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Analysis.cs">
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -235,7 +235,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Cluster.cs">
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -243,27 +243,38 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CloudFile.cs" />
     <Compile Include="Models\CloudFilesModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Patient.cs">
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="User.cs">
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserRoles.cs">
-      <DependentUpon>3DCytoFlowDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AnalysesController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
+    <Compile Include="User.cs">
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="3DCytoFlowDB.edmx.sql" />
+    <Content Include="3DCytoFlowDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
+      <LastGenOutput>3DCytoFlowDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="3DCytoFlowDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
+      <LastGenOutput>3DCytoFlowDBModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapValidator.min.css" />
@@ -305,22 +316,12 @@
     <Content Include="ApplicationInsights.config" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\chunked-uploader.js" />
-    <EntityDeploy Include="3DCytoFlowDB.edmx">
+    <EntityDeploy Include="3DCytoFlowDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>3DCytoFlowDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>3DCytoFlowDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="3DCytoFlowDB.edmx.diagram">
-      <DependentUpon>3DCytoFlowDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="3DCytoFlowDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>3DCytoFlowDB.Context.cs</LastGenOutput>
-      <DependentUpon>3DCytoFlowDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="3DCytoFlowDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>3DCytoFlowDB.cs</LastGenOutput>
-      <DependentUpon>3DCytoFlowDB.edmx</DependentUpon>
+    <Content Include="3DCytoFlowDBModel.edmx.diagram">
+      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
@@ -387,6 +388,7 @@
     <Content Include="Views\Analyses\Delete.cshtml" />
     <Content Include="Views\Analyses\Details.cshtml" />
     <Content Include="Views\Analyses\Index.cshtml" />
+    <Content Include="Views\Shared\LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,9 +22,15 @@
 </head>
 <body>
     @*Render Navigation Menu*@
-    @{
-        Html.RenderPartial("NavigationMenu");
-    }
+@{
+    //Eventually use this
+//    if (User.Identity.IsAuthenticated)
+//    {
+//        Html.RenderPartial("NavigationMenu");
+//    }
+
+    Html.RenderPartial("NavigationMenu");
+}
     <div id="loading">
         <div id="loadingcontent">
             <p id="loadingspinner">

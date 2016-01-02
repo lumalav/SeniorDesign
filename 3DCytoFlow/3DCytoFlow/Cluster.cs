@@ -16,12 +16,13 @@ namespace _3DCytoFlow
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string X { get; set; }
-        public string Y { get; set; }
-        public string Z { get; set; }
-        public string Width { get; set; }
-        public string Height { get; set; }
-        public string Depth { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double Depth { get; set; }
+        public int Analysis_Id { get; set; }
     
         public virtual Analysis Analysis { get; set; }
     }
