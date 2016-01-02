@@ -152,44 +152,49 @@ namespace _3DCytoFlow.Controllers
         {
             if (ModelState.IsValid)
             {
-                var applicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(applicationUser, model.Password);
+                //Get the doctor's role
+                var role = _db.UserRoles.First(i => i.Name.Equals("doctor"));
 
+                //Create the user and assign role
                 var user = new User
                 {
                     FirstName = model.FirstName,
                     Middle = model.Middle,
                     LastName = model.LastName,
+                    DOB = model.DOB,
+                    Login = model.Email,
+                    Password = model.Password,
+                    Email = model.Email,
+                    Phone = model.Phone,
                     Address = model.WorkAddress,
                     City = model.City,
-                    Zip = model.Zip,
-            //        DOB = model.DOB,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Phone = model.Phone
+                    Zip = model.Zip,              
+                    UserRole_Id = role.Id,
+                    UserRole = role
                 };
-                
-                
+
+                //add it to the DB
+                _db.Users.Add(user);
+
+                var applicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(applicationUser, model.Password);
+
                 if (result.Succeeded)
                 {
-
-
-
-
-
-
-
-
-
-                    await SignInManager.SignInAsync(applicationUser, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(applicationUser.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = applicationUser.Id, code }, Request.Url.Scheme);
 
-                    return RedirectToAction("Index", "Home");
+                    EmailService.SendMail(new IdentityMessage
+                                          {
+                                             Subject = "Confirm " + user.FirstName + " " + user.LastName + " account",
+                                             Body = "Please confirm " + user.FirstName + " " + user.LastName + " account by clicking <a href=\"" + callbackUrl + "\">here</a>"
+                                          });
+
+                    //save the changes to the db
+                    _db.SaveChanges();
+
+                    return View("WaitConfirmation");
                 }
                 AddErrors(result);
             }

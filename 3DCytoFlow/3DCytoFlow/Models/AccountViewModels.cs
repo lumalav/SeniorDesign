@@ -69,6 +69,7 @@ namespace _3DCytoFlow.Models
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Required]
         [Display(Name = "MI")]
         public string Middle { get; set; }
 
