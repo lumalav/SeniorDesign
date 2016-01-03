@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using Twilio;
 using _3DCytoFlow.Models;
 
 namespace _3DCytoFlow
@@ -21,6 +26,27 @@ namespace _3DCytoFlow
             // Plug in your email service here to send an email.
             return Task.FromResult(0);
         }
+
+        public static void SendMail(IdentityMessage message, string to = null)
+        {
+            var text = $"Please click on this link to {message.Subject}: {message.Body}";
+            var html = message.Body;
+
+            var mail = new MailAddress(WebConfigurationManager.AppSettings["emailAccount"]);
+            var msg = new MailMessage { From = mail };
+            msg.To.Add(to == null ? mail : new MailAddress(to));
+
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+
+            var smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            var credentials = new NetworkCredential(mail.Address, WebConfigurationManager.AppSettings["emailPassword"]);
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = credentials;
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(msg);
+        }
     }
 
     public class SmsService : IIdentityMessageService
@@ -29,6 +55,15 @@ namespace _3DCytoFlow
         {
             // Plug in your SMS service here to send a text message.
             return Task.FromResult(0);
+        }
+
+        public static void SendSms(IdentityMessage message)
+        {
+            var accountSid = WebConfigurationManager.AppSettings["twilioSid"];
+            var authToken = WebConfigurationManager.AppSettings["twilioToken"];
+
+            var twilio = new TwilioRestClient(accountSid, authToken);
+            twilio.SendMessage("+12027598248", message.Destination, message.Body, "");
         }
     }
 

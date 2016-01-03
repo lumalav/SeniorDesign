@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -72,6 +69,21 @@ namespace _3DCytoFlow.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            // Require the user to have a confirmed email before they can log on.
+            var applicationUser = await UserManager.FindByNameAsync(model.Email);
+            
+            //Get the actual user from the DB
+            var user = _db.Users.FirstOrDefault(i => i.Email.Equals(applicationUser.Email));
+
+            if (applicationUser != null && user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(applicationUser.Id))
+                {
+                    ViewBag.errorMessage = "Your email have not been confirmed.";
+                    return View("Error");
+                }
             }
 
             // This doesn't count login failures towards account lockout
@@ -155,6 +167,9 @@ namespace _3DCytoFlow.Controllers
                 //Get the doctor's role
                 var role = _db.UserRoles.First(i => i.Name.Equals("doctor"));
 
+                var applicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(applicationUser, model.Password);
+
                 //Create the user and assign role
                 var user = new User
                 {
@@ -163,21 +178,18 @@ namespace _3DCytoFlow.Controllers
                     LastName = model.LastName,
                     DOB = model.DOB,
                     Login = model.Email,
-                    Password = model.Password,
+                    Password = applicationUser.PasswordHash,
                     Email = model.Email,
                     Phone = model.Phone,
                     Address = model.WorkAddress,
                     City = model.City,
-                    Zip = model.Zip,              
+                    Zip = model.Zip,
                     UserRole_Id = role.Id,
                     UserRole = role
                 };
 
                 //add it to the DB
                 _db.Users.Add(user);
-
-                var applicationUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(applicationUser, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -188,7 +200,7 @@ namespace _3DCytoFlow.Controllers
                     EmailService.SendMail(new IdentityMessage
                                           {
                                              Subject = "Confirm " + user.FirstName + " " + user.LastName + " account",
-                                             Body = "Please confirm " + user.FirstName + " " + user.LastName + " account by clicking <a href=\"" + callbackUrl + "\">here</a>"
+                                             Body = "Please confirm " + user.FirstName + " " + user.LastName + " account by clicking: " + callbackUrl
                                           });
 
                     //save the changes to the db
@@ -224,7 +236,7 @@ namespace _3DCytoFlow.Controllers
             return View();
         }
 
-        //
+        // Done
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
@@ -242,10 +254,16 @@ namespace _3DCytoFlow.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { UserId = user.Id, code }, Request.Url.Scheme);
+
+                EmailService.SendMail(new IdentityMessage
+                {
+                    Subject = "Reset Password",
+                    Body = "Please reset your password by clicking here: " + callbackUrl 
+                }, user.Email);
+
+                return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
@@ -279,15 +297,21 @@ namespace _3DCytoFlow.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
+            var applicationUser = await UserManager.FindByNameAsync(model.Email);
+            if (applicationUser == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
+            var result = await UserManager.ResetPasswordAsync(applicationUser.Id, model.Code, model.Password);
+
+            var user = _db.Users.First(i => i.Email.Equals(applicationUser.Email));
+            user.Password = applicationUser.PasswordHash;
+
             if (result.Succeeded)
             {
+                _db.SaveChanges();
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
@@ -300,17 +324,6 @@ namespace _3DCytoFlow.Controllers
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
-        }
-
-        //
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Request a redirect to the external login provider
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
         //
@@ -345,78 +358,10 @@ namespace _3DCytoFlow.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
-        //
-        // GET: /Account/ExternalLoginCallback
-        [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            if (loginInfo == null)
-            {
-                return RedirectToAction("Login");
-            }
-
-            // Sign in the user with this external login provider if the user already has a login
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
-                default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
-        }
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
-        }
-
-        //
+        // 
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -424,14 +369,6 @@ namespace _3DCytoFlow.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
-        }
-
-        //
-        // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
-        public ActionResult ExternalLoginFailure()
-        {
-            return View();
         }
 
         protected override void Dispose(bool disposing)
