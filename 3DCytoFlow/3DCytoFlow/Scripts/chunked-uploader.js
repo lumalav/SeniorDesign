@@ -6,7 +6,7 @@ var blockLength = 1048576;
 var numberOfBlocks = 1;
 var currentChunk = 1;
 var retryAfterSeconds = 3;
-var valid = false;
+
 $(document).ready(function ()
 {
     $(document).on("click", "#fileUpload", beginUpload);
@@ -26,33 +26,31 @@ $(document).ready(function ()
                        message: "The selected file is not valid. The file extension should be .fcs"
                    }
                 }
+            },
+            patient: {
+                validators: {
+                    notEmpty: {
+                        message: "The patient is required and can't be empty"
+                    }
+                }
             }
         }
         })
-        .on("success.field.bv", function (e, data) {
-            data.bv.disableSubmitButtons(false);
-            valid = true;
-        })
-        .on("status.field.bv", function (e, data) {
-            // I don't want to add has-success class to valid field container
-            data.element.parents(".form-group").removeClass("has-success");
-            // I want to enable the submit button all the time
-            data.bv.disableSubmitButtons(true);
-            valid = false;
+        .on("success.form.bv", function(e) {
+            e.preventDefault();
+            $("#validator").data("bootstrapValidator").disableSubmitButtons(true);
         });
     });
 
-var beginUpload = function ()
-{
-    if (valid) {
-        $("#progressBar").css("width", parseInt(0) + "%");
-        var fileControl = document.getElementById("selectFile");
-        if (fileControl.files.length > 0) {
-            for (var i = 0; i < fileControl.files.length; i++) {
-                uploadMetaData(fileControl.files[i]);
-            }
+var beginUpload = function () {
+    $("#fileUpload").prop("disabled", true);
+    $("#progressBar").css("width", parseInt(0) + "%");
+    var fileControl = document.getElementById("selectFile");
+    if (fileControl.files.length > 0) {
+        for (var i = 0; i < fileControl.files.length; i++) {
+            uploadMetaData(fileControl.files[i]);
         }
-    }  
+    }
 }
 
 var uploadMetaData = function (file)
@@ -61,11 +59,12 @@ var uploadMetaData = function (file)
     numberOfBlocks = Math.ceil(file.size / blockLength);
     var name = file.name;
     currentChunk = 1;
+    var patient = $("#patients option:selected").text();
 
     $.ajax({
         type: "POST",
         async: false,
-        url: "/Home/SetMetadata?blocksCount=" + numberOfBlocks + "&fileName=" + name + "&fileSize=" + size
+        url: "/Account/SetMetadata?blocksCount=" + numberOfBlocks + "&fileName=" + name + "&fileSize=" + size + "&patient=" + patient
     }).done(function (state)
     {
         if (state === true)
@@ -110,7 +109,7 @@ var sendFile = function (file, chunkSize)
         }
         var jqxhr = $.ajax({
             async: true,
-            url: ("/Home/UploadChunk?id=" + currentChunk),
+            url: ("/Account/UploadChunk?id=" + currentChunk),
             data: fileChunk,
             cache: false,
             contentType: false,
@@ -150,6 +149,8 @@ var sendFile = function (file, chunkSize)
                 if (notice.isLastBlock)
                 {
                     $("#progressBar").css("width", "100%");
+                    $("#fileUpload").prop("disabled", false);
+                    $("#message").css("display", "inline-block");
                 }
                 displayStatusMessage(notice.message);
                 return;

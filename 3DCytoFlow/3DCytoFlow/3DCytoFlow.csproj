@@ -258,6 +258,7 @@
     <Compile Include="Models\CloudFilesModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UploadFileModel.cs" />
     <Compile Include="Patient.cs">
       <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
     </Compile>
@@ -382,7 +383,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
-    <Content Include="Views\Home\UploadFile.cshtml" />
+    <Content Include="Views\Account\UploadFile.cshtml" />
     <Content Include="Scripts\metisMenu.min.js.map" />
     <Content Include="Scripts\metisMenu.js.map" />
     <Content Include="Views\Shared\NavigationMenu.cshtml" />

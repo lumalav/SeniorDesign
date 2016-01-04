@@ -1,63 +1,67 @@
-﻿@model IEnumerable<_3DCytoFlow.Analysis>
+﻿@model IEnumerable<Analysis>
 
 @{
     ViewBag.Title = "Index";
 }
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@ViewBag.Title</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <p>
+        @Html.ActionLink("Upload File", "UploadFile", "Account")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FcsFilePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FcsUploadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResultFilePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResultDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delta)
+            </th>
+            <th></th>
+        </tr>
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FcsFilePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FcsUploadDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ResultFilePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ResultDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Delta)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FcsFilePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FcsUploadDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResultFilePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResultDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Delta)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FcsFilePath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FcsUploadDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResultFilePath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResultDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Delta)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>

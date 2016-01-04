@@ -12,7 +12,14 @@ namespace _3DCytoFlow.Controllers
         // GET: Patients
         public ActionResult Index()
         {
-            return View(_db.Patients.ToList());
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = GetUser();
+         
+                return View(_db.Patients.Where(i => i.User_Id.Equals(user.Id)).ToList());
+            }
+
+            return RedirectToAction("LogIn", "Account");
         }
 
         // GET: Patients/Details/5
@@ -52,7 +59,8 @@ namespace _3DCytoFlow.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Patients.Add(patient);
+                var user = GetUser();
+                user.Patients.Add(patient);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -114,8 +122,7 @@ namespace _3DCytoFlow.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
-            
+        {          
             var patient = _db.Patients.Find(id);
             
             _db.Patients.Remove(patient);
@@ -133,5 +140,11 @@ namespace _3DCytoFlow.Controllers
             }
             base.Dispose(disposing);
         }
+        #region Helpers
+        private User GetUser()
+        {
+            return _db.Users.First(i => i.Email.Equals(User.Identity.Name));
+        }
+        #endregion
     }
 }

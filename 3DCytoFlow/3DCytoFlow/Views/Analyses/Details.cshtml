@@ -1,66 +1,74 @@
-﻿@model _3DCytoFlow.Analysis
+﻿@model Analysis
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@ViewBag.Title</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div>
+        <h4>Analysis</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
 
-<div>
-    <h4>Analysis</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FcsFilePath)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FcsFilePath)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FcsFilePath)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FcsFilePath)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FcsUploadDate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FcsUploadDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FcsUploadDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FcsUploadDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ResultFilePath)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ResultFilePath)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ResultFilePath)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ResultFilePath)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ResultDate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ResultDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ResultDate)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ResultDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Delta)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Delta)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Delta)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Delta)
-        </dd>
-
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @*    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
-<p>
-@*    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+  

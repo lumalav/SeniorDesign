@@ -13,6 +13,8 @@ namespace _3DCytoFlow.Models
         public DateTime StartTime { get; set; }
         public string UploadStatusMessage { get; set; }
         public bool IsUploadCompleted { get; set; }
+        public Patient Patient { get; set; }
+        public string OriginalFileName { get; set; }
 
         public static CloudFile CreateFromIListBlobItem(IListBlobItem item)
         {

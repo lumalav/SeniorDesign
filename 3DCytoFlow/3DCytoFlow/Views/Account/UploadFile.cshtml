@@ -1,4 +1,4 @@
-﻿
+﻿@model _3DCytoFlow.Models.UploadFileModel
 @{
     ViewBag.Title = "UploadFile";
 }
@@ -12,10 +12,19 @@
     </div>
 
     <div class="form-group" id="validator">
+        <select class="form-control" name="patient" id="patients">
+            <option value="">-- Select a patient --</option>
 
-        <input type="file" id="selectFile" name="fileupload" />
+            @foreach (var patient in Model.Patients)
+            {
+                <option value="@patient.FirstName">@patient.FirstName @patient.LastName</option>
+            }
+
+        </select>
         <br>
-        <input type="submit" class="btn btn-default" name="fileUpload" id="fileUpload" value="Submit" />
+        <input type="file" id="selectFile" name="fileupload"/>
+        <br>
+        <input type="submit" class="btn btn-default" name="fileUpload" id="fileUpload" value="Submit"/>
         <br>
         <br>
         <div class="progress">
@@ -23,6 +32,8 @@
                 <span class="sr-only"></span>
             </div>
         </div>
+
+        <p id="message" style="display: none;">You'll receive an SMS message when the results have been completed</p>
     </div>
 
     <label id="statusMessage"></label>
