@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Analysis>
+
+@{
+    ViewBag.Title = "Results";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/stylish.css">
+<link rel="stylesheet" type="text/css" href="~/Content/semantic.min.css">
+<script src="~/Scripts/three.min2.js"></script>
+<script src="~/Scripts/OrbitControls-Touch.js"></script>
+<script src="~/Scripts/rAF.js"></script>
+<script src="~/Scripts/lodash.min.js"></script>
+<script src="~/Scripts/semantic.min.js"></script>
+
+<div id="page-wrapper">
+    <div id="body3">
+        <!-- RIGHT SIDE BAR -->
+        <div id="info-box" class="hidden">
+            <div class="ui segment">
+                <div class="ui green inverted statistic">
+                    <div id="statsSize" class="value">
+                        0
+                    </div>
+                    <div class="label">
+                        Points Plotted
+                    </div>
+                </div>
+                <div class="ui blue inverted statistic">
+                    <div id="clusterSize" class="value">
+                        0
+                    </div>
+                    <div class="label">
+                        Clusters
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <i class="ui white big undo icon"></i>
+            <div class="ui inverted toggle checkbox">
+                <label id="rotateLabel">Rotate</label>
+                <input type="checkbox" name="rotateCheckbox" checked="checked" onClick="rotateToggle()">
+            </div>
+
+            <div class="ui divider"></div>
+
+            <div id="clusterInfo">
+            </div>
+
+        </div>
+
+        <i class="fixed big white info icon" id="infoButt"></i>
+
+        <!--PUSHER -->
+        <div class="pusher">
+            <canvas id="data-canvas"></canvas>
+            <div id="loader">
+                <div class="ui large indeterminate loader"></div>
+            </div>
+        </div>
+
+        <script src="~/Scripts/dreda.js"></script>
+        <script src="~/Scripts/ui.js"></script>
+        <script>
+            $(document).ready(function() {
+                plotExampleAndLoad();
+            });
+        </script>
+    </div>
+</div>
+
+

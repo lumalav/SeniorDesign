@@ -22,12 +22,12 @@
     <div class="row">
         <h3>Current Files</h3>
         <ul>
-            @foreach (var item in Model.Files)
-            {
-                <li>
-                    <a href="@item.URL">@item.FileName</a> (@item.Size bytes)
-                </li>
-            }
+@*            @foreach (var item in Model.Files)*@
+@*            {*@
+@*                <li>*@
+@*                    <a href="@item.URL">@item.FileName</a> (@item.Size bytes)*@
+@*                </li>*@
+@*            }*@
         </ul>
         @Html.ActionLink("Upload Another File", "UploadFile", "Account")
     </div>

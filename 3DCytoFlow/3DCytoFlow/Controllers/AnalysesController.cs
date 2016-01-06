@@ -14,6 +14,12 @@ namespace _3DCytoFlow.Controllers
             return View(_db.Analyses.ToList());
         }
 
+        // GET: Analyses
+        public ActionResult Index2()
+        {
+            return View(_db.Analyses.ToList());
+        }
+
         // GET: Analyses/Details/5
         public ActionResult Details(int? id)
         {

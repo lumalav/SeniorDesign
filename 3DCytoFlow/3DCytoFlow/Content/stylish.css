@@ -1,0 +1,118 @@
+
+/* GLOBALS */
+
+#body3{
+    font-family: 'Titillium Web', sans-serif;   
+}
+
+h1{
+	  text-align: center;
+	  padding: 50px;
+}
+
+a > i {
+	color: #000;
+}
+
+#page-wrapper {
+    padding: 0 0px;     
+}
+
+/* IDS */
+
+#data-canvas {
+	position: absolute;
+	width: calc(100% - 250px);
+	height: 100%;
+	z-index: 1;
+}
+
+#loader {
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+}
+#infoButt {
+	top: 80px;
+	padding: 0px 10px 0px 0px;
+}
+#info-box {
+	background-color: rgba(0,0,0,0);
+	position: absolute;
+	top: 100px;
+	right: 8px;
+	z-index: 5;
+	padding: 0px 10px 0px 0px;
+	text-align: right;
+	margin: 0px 0px 0px auto;
+}
+
+#info-box .ui.segment {
+	background-color: inherit;
+}
+
+#side-center{
+	margin: auto;
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+
+
+
+#rotateLabel {
+	color: rgba(255,255,255,.8);
+}
+
+
+/* CLASSES */
+
+
+.infoLabel {
+	color: rgba(255,255,255,.8);
+}
+
+.btnLink {
+	color: #FFF;
+}
+
+.side{
+	height: inherit;
+	background-color: #B2FFFF;
+	padding: 25px 0px 0px 10px;
+}
+
+.side p{
+	padding: 0px 15px 0px 15px;
+}
+
+.side-center p{
+	padding: 0px 15px 0px 15px;
+}
+
+.ui.sidebar{
+	background-color: #B2FFFF;
+}
+
+
+.content.icon  {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	z-index: 10;
+
+}
+
+.info.icon  {
+	position:  absolute;
+	top: 8px;
+	right: 8px;
+	z-index: 10;
+	text-align: right;
+
+}
+
+.hidden {
+	display: none;
+}
+

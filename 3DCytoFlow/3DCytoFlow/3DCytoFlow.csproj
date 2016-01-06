@@ -288,9 +288,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapValidator.min.css" />
+    <Content Include="Content\DataProjector.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\metisMenu.min.css" />
+    <Content Include="Content\semantic.min.css" />
+    <Content Include="Content\stylish.css" />
+    <Content Include="Content\themes\default\assets\fonts\icons.svg" />
     <Content Include="Content\timeline.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -298,6 +302,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
+    <Content Include="Images\disc.png" />
     <Content Include="Images\edit6464.png" />
     <Content Include="Images\editblue6464.png" />
     <Content Include="Images\family6464.png" />
@@ -333,7 +338,16 @@
     <Content Include="3DCytoFlowDBModel.edmx.diagram">
       <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\data.json" />
+    <Content Include="Scripts\data2.json" />
+    <Content Include="fonts\icons.woff2" />
+    <Content Include="Content\themes\default\assets\fonts\icons.eot" />
+    <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
+    <Content Include="Content\themes\default\assets\fonts\icons.woff" />
+    <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\DataProjector.js" />
+    <Content Include="Scripts\dreda.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
@@ -344,12 +358,21 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\lodash.min.js" />
     <Content Include="Scripts\metisMenu.js" />
     <Content Include="Scripts\metisMenu.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\OrbitControls-Touch.js" />
+    <Content Include="Scripts\rAF.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\three.min.js" />
+    <Content Include="Scripts\three.min2.js" />
+    <Content Include="Scripts\TrackballControls.js" />
+    <Content Include="Scripts\TweenLite.min.js" />
+    <Content Include="Scripts\ui.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -397,6 +420,7 @@
     <Content Include="Views\Analyses\Index.cshtml" />
     <Content Include="Views\Shared\LoginPartial.cshtml" />
     <Content Include="Views\Account\WaitConfirmation.cshtml" />
+    <Content Include="Views\Analyses\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
