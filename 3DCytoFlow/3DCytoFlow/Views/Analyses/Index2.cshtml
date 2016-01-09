@@ -14,7 +14,21 @@
 
 <div id="page-wrapper">
     <div id="body3">
-        <!-- RIGHT SIDE BAR -->
+        <div class="form-group" id="analysisGroup">
+            <div class="label " id="label2">Patient's Name - Data Upload Date</div>
+            <div>
+                <select class="form-control" name="status" id="analysisSelect">
+                    @foreach (var analysis in Model.Where(analysis => analysis.ResultFilePath != null))
+                    {
+                        var displayName = analysis.Patient.LastName + ", " + @analysis.Patient.FirstName + " - " + analysis.Date.ToString("MM-dd-yyyy");
+
+                        <option>@displayName</option>
+                    }
+                    <option>b</option>
+                </select>
+            </div>
+        </div>
+
         <div id="info-box" class="hidden">
             <div class="ui segment">
                 <div class="ui green inverted statistic">
@@ -36,15 +50,14 @@
             </div>
             <div class="ui divider"></div>
             <i class="ui white big undo icon"></i>
+
             <div class="ui inverted toggle checkbox">
                 <label id="rotateLabel">Rotate</label>
                 <input type="checkbox" name="rotateCheckbox" checked="checked" onClick="rotateToggle()">
             </div>
 
             <div class="ui divider"></div>
-
-            <div id="clusterInfo">
-            </div>
+            <div id="clusterInfo"></div>
 
         </div>
 
@@ -61,9 +74,18 @@
         <script src="~/Scripts/dreda.js"></script>
         <script src="~/Scripts/ui.js"></script>
         <script>
-            $(document).ready(function() {
-                plotExampleAndLoad();
+            $(document).ready(function () {
+                plot(getFile($('#analysisSelect').val()));
+
+                $('#analysisSelect').on('change', function () {
+                    plot(getFile(this.value));
+                });
             });
+
+            function getFile(value) {
+                data = null;
+                return value.replace(/ /g, '').replace(",", "-").toLowerCase() + ".json";
+            }
         </script>
     </div>
 </div>

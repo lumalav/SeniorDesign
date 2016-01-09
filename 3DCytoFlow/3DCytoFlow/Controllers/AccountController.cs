@@ -94,7 +94,7 @@ namespace _3DCytoFlow.Controllers
                     ViewBag.errorMessage = "Your email have not been confirmed.";
                     return View("Error");
                 }
-            }
+            } 
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -102,6 +102,8 @@ namespace _3DCytoFlow.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //if we got to this point, we could download all the results
+                    DownloadResults(user);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -420,6 +422,36 @@ namespace _3DCytoFlow.Controllers
         }
 
         #region Helpers
+        /// <summary>
+        /// Downloads all the json files from the storage and saves them in the Results folder
+        /// </summary>
+        /// <param name="user"></param>
+        private void DownloadResults(User user)
+        {
+            // Retrieve storage account from connection string.
+            var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
+
+            // Create the blob client.
+            var blobClient = storageAccount.CreateCloudBlobClient();
+
+            //get the container
+            var containerName = user.LastName + "-" + user.FirstName + "-" + user.Id;
+            var container = GetContainer(storageAccount, containerName.ToLower());
+
+            //List blobs and directories in this container
+            var blobs = container.ListBlobs(useFlatBlobListing: true);
+
+            foreach (var blob in blobs.Where(i => i.Uri.ToString().Contains(".json")).Cast<CloudBlockBlob>())
+            {
+                var filePath = blob.Name.Split('/');
+                var patientName = filePath[0];
+                var fileName = filePath[1];         
+                using (var fileStream = new FileStream(Server.MapPath("/Results/" + patientName + "-" + fileName), FileMode.Create))
+                {
+                    blob.DownloadToStream(fileStream);
+                }
+            }              
+        }
         /// <summary>
         /// returns the current user
         /// </summary>
