@@ -46,6 +46,19 @@ a > i {
 	text-align: right;
 	margin: 0px 0px 0px auto;
 }
+#analysisGroup {
+    top: 100px;
+    z-index: 5;
+    position: absolute;
+}
+#analysisSelect {
+    margin: 10px;
+}
+.label {
+    font-size: 20px; 
+    font-style: normal; 
+    float: left;
+}
 
 #info-box .ui.segment {
 	background-color: inherit;
@@ -56,9 +69,6 @@ a > i {
 	text-align: center;
 	padding-bottom: 15px;
 }
-
-
-
 
 #rotateLabel {
 	color: rgba(255,255,255,.8);

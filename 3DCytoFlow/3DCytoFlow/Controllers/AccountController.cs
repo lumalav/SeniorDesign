@@ -423,6 +423,7 @@ namespace _3DCytoFlow.Controllers
 
         #region Helpers
         /// <summary>
+        /// TODO:Improve. this will be triggered with entity change notifier: http://www.codeproject.com/Articles/496484/SqlDependency-with-Entity-Framework
         /// Downloads all the json files from the storage and saves them in the Results folder
         /// </summary>
         /// <param name="user"></param>
@@ -431,22 +432,28 @@ namespace _3DCytoFlow.Controllers
             // Retrieve storage account from connection string.
             var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
 
-            // Create the blob client.
-            var blobClient = storageAccount.CreateCloudBlobClient();
-
             //get the container
             var containerName = user.LastName + "-" + user.FirstName + "-" + user.Id;
+
             var container = GetContainer(storageAccount, containerName.ToLower());
 
             //List blobs and directories in this container
             var blobs = container.ListBlobs(useFlatBlobListing: true);
 
+            //prepare the location
+            var directory = Server.MapPath("/Results/" + containerName);
+
             foreach (var blob in blobs.Where(i => i.Uri.ToString().Contains(".json")).Cast<CloudBlockBlob>())
             {
                 var filePath = blob.Name.Split('/');
                 var patientName = filePath[0];
-                var fileName = filePath[1];         
-                using (var fileStream = new FileStream(Server.MapPath("/Results/" + patientName + "-" + fileName), FileMode.Create))
+                var fileName = filePath[1];
+
+                //check if folder exists, if not create it
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                using (var fileStream = new FileStream(Server.MapPath("/Results/" + containerName + "/" + patientName + "-" + fileName), FileMode.Create))
                 {
                     blob.DownloadToStream(fileStream);
                 }

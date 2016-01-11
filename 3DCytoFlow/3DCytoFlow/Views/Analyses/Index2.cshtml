@@ -1,7 +1,9 @@
-﻿@model IEnumerable<Analysis>
+﻿@using Microsoft.Ajax.Utilities
+@model IEnumerable<Analysis>
 
 @{
     ViewBag.Title = "Results";
+    var directory = "";
 }
 
 <link rel="stylesheet" type="text/css" href="~/Content/stylish.css">
@@ -18,13 +20,19 @@
             <div class="label " id="label2">Patient's Name - Data Upload Date</div>
             <div>
                 <select class="form-control" name="status" id="analysisSelect">
+                    
                     @foreach (var analysis in Model.Where(analysis => analysis.ResultFilePath != null))
                     {
+                        if (directory.IsNullOrWhiteSpace())
+                        {
+                            directory = analysis.User.LastName + "-" + analysis.User.FirstName + "-" + analysis.User.Id + "/";
+                        }
+
                         var displayName = analysis.Patient.LastName + ", " + @analysis.Patient.FirstName + " - " + analysis.Date.ToString("MM-dd-yyyy");
 
                         <option>@displayName</option>
                     }
-                    <option>b</option>
+
                 </select>
             </div>
         </div>
@@ -84,7 +92,7 @@
 
             function getFile(value) {
                 data = null;
-                return value.replace(/ /g, '').replace(",", "-").toLowerCase() + ".json";
+                return '@(directory)' + value.replace(/ /g, '').replace(",", "-").toLowerCase() + ".json";
             }
         </script>
     </div>
