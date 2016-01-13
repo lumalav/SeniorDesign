@@ -614,7 +614,7 @@ namespace _3DCytoFlow.Controllers
                     {
                         Date = DateTime.Now.Date,
                         FcsFilePath = fcsPath,
-                        FcsUploadDate = DateTime.Now.ToString("MM-dd-yyyy"),
+                        FcsUploadDate = DateTime.Now.Date,
                         ResultFilePath = "",
                         ResultDate = DateTime.Now.Date,
                         Delta = 0.00

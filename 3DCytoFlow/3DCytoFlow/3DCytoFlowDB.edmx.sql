@@ -31,7 +31,7 @@ GO
 CREATE TABLE [dbo].[Users] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
-    [Middle] nvarchar(max)  NOT NULL,
+    [Middle] nvarchar(max) NULL,
     [LastName] nvarchar(max)  NOT NULL,
     [DOB] datetime NOT NULL,
     [Login] nvarchar(max)  NOT NULL,
@@ -56,7 +56,7 @@ GO
 CREATE TABLE [dbo].[Patients] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
-    [Middle] nvarchar(max)  NOT NULL,
+    [Middle] nvarchar(max) NULL,
     [LastName] nvarchar(max)  NOT NULL,
     [DOB] datetime NOT NULL,
     [Email] nvarchar(max)  NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE [dbo].[Analyses] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Date] datetime NOT NULL,
     [FcsFilePath] nvarchar(max)  NOT NULL,
-    [FcsUploadDate] nvarchar(max)  NOT NULL,
+    [FcsUploadDate] datetime NOT NULL,
     [ResultFilePath] nvarchar(max)  NOT NULL,
     [ResultDate] datetime NOT NULL,
     [Delta] float NOT NULL,

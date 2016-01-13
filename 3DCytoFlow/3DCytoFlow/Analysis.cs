@@ -23,7 +23,7 @@ namespace _3DCytoFlow
         public int Id { get; set; }
         public System.DateTime Date { get; set; }
         public string FcsFilePath { get; set; }
-        public string FcsUploadDate { get; set; }
+        public System.DateTime FcsUploadDate { get; set; }
         public string ResultFilePath { get; set; }
         public System.DateTime ResultDate { get; set; }
         public double Delta { get; set; }
