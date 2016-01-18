@@ -24,7 +24,7 @@
     }
 
     function navigateToIndex() {
-        window.location.href = '/Patients/Index';
+        window.location.href = '/Patient/Index';
         showLoadingScreen();
     }
 
@@ -46,7 +46,7 @@
             </button>
             @Html.ActionLink("3D CytoFlow", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @onclick = "showLoadingScreen()" })
         </div>
-@*        <!-- Edit Patients Button -->*@
+@*        <!-- Edit Patient Button -->*@
 @*        <div class="navbar-header">*@
 @*            @{*@
 @*                if (currentRequest == null)*@
@@ -105,7 +105,7 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">               
                     <li>
-                        <a href="@Url.Action("Index", "Patients")" ><img src="../../Images/family6464blue.png" class="img-responsive" alt="Patients"> Patients</a>
+                        <a href="@Url.Action("Index", "Patients")" ><img src="../../Images/family6464blue.png" class="img-responsive" alt="Patient"> Patient</a>
                         
                         <ul class="nav">
 
@@ -128,7 +128,7 @@
                         @if (currentRequest == null)
                         {
 @*                            <a href="#" onclick="alert('Select a patient first')"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>*@
-                            <a href="@Url.Action("Index2", "Analyses")"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>
+                            <a href="@Url.Action("Index", "Analyses")"><img src="../../Images/results6464blue.png" class="img-responsive" alt="Results"> Analysis Results</a>
                         }
                         else
                         {

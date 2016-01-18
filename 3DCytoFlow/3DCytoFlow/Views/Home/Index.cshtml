@@ -19,16 +19,16 @@
         </p>
     </div>
 
-    <div class="row">
-        <h3>Current Files</h3>
-        <ul>
-@*            @foreach (var item in Model.Files)*@
-@*            {*@
-@*                <li>*@
-@*                    <a href="@item.URL">@item.FileName</a> (@item.Size bytes)*@
-@*                </li>*@
-@*            }*@
-        </ul>
-        @Html.ActionLink("Upload Another File", "UploadFile", "Account")
-    </div>
+@*    <div class="row">*@
+@*        <h3>Current Files</h3>*@
+@*        <ul>*@
+@*$1$            @foreach (var item in Model.Files)#1#*@
+@*$1$            {#1#*@
+@*$1$                <li>#1#*@
+@*$1$                    <a href="@item.URL">@item.FileName</a> (@item.Size bytes)#1#*@
+@*$1$                </li>#1#*@
+@*$1$            }#1#*@
+@*        </ul>*@
+@*        @Html.ActionLink("Upload Another File", "UploadFile", "Account")*@
+@*    </div>*@
 </div>

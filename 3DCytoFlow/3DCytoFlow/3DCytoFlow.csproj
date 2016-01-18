@@ -96,6 +96,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -220,23 +221,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="3DCytoFlowDBModel.Context.cs">
+    <Compile Include="3DCytoFlowModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDBModel.Context.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="3DCytoFlowDBModel.cs">
+    <Compile Include="3DCytoFlowModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="3DCytoFlowDBModel.Designer.cs">
+    <Compile Include="3DCytoFlowModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Analysis.cs">
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -244,7 +245,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Cluster.cs">
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -260,35 +261,34 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UploadFileModel.cs" />
     <Compile Include="Patient.cs">
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\AnalysesController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="User.cs">
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UserRole.cs">
-      <DependentUpon>3DCytoFlowDBModel.tt</DependentUpon>
+      <DependentUpon>3DCytoFlowModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="3DCytoFlowDB.edmx.sql" />
-    <Content Include="3DCytoFlowDBModel.Context.tt">
+    <Content Include="3DCytoFlowModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
-      <LastGenOutput>3DCytoFlowDBModel.Context.cs</LastGenOutput>
+      <DependentUpon>3DCytoFlowModel.edmx</DependentUpon>
+      <LastGenOutput>3DCytoFlowModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="3DCytoFlowDBModel.tt">
+    <Content Include="3DCytoFlowModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
-      <LastGenOutput>3DCytoFlowDBModel.cs</LastGenOutput>
+      <DependentUpon>3DCytoFlowModel.edmx</DependentUpon>
+      <LastGenOutput>3DCytoFlowModel.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapValidator.min.css" />
-    <Content Include="Content\DataProjector.css" />
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\metisMenu.css" />
     <Content Include="Content\metisMenu.min.css" />
@@ -331,13 +331,6 @@
     <Content Include="ApplicationInsights.config" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\chunked-uploader.js" />
-    <EntityDeploy Include="3DCytoFlowDBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>3DCytoFlowDBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="3DCytoFlowDBModel.edmx.diagram">
-      <DependentUpon>3DCytoFlowDBModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Scripts\data.json" />
     <Content Include="Scripts\data2.json" />
     <Content Include="fonts\icons.woff2" />
@@ -345,8 +338,14 @@
     <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
+    <EntityDeploy Include="3DCytoFlowModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>3DCytoFlowModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="3DCytoFlowModel.edmx.diagram">
+      <DependentUpon>3DCytoFlowModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\DataProjector.js" />
     <Content Include="Scripts\dreda.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -369,9 +368,6 @@
     <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\spin.js" />
     <Content Include="Scripts\three.min.js" />
-    <Content Include="Scripts\three.min2.js" />
-    <Content Include="Scripts\TrackballControls.js" />
-    <Content Include="Scripts\TweenLite.min.js" />
     <Content Include="Scripts\ui.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -417,10 +413,9 @@
     <Content Include="Views\Patients\Index.cshtml" />
     <Content Include="Views\Analyses\Delete.cshtml" />
     <Content Include="Views\Analyses\Details.cshtml" />
-    <Content Include="Views\Analyses\Index.cshtml" />
     <Content Include="Views\Shared\LoginPartial.cshtml" />
     <Content Include="Views\Account\WaitConfirmation.cshtml" />
-    <Content Include="Views\Analyses\Index2.cshtml" />
+    <Content Include="Views\Analyses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

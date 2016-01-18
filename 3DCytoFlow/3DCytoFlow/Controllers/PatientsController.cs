@@ -9,7 +9,7 @@ namespace _3DCytoFlow.Controllers
     {
         private readonly CytoFlowDBContext _db = new CytoFlowDBContext();
 
-        // GET: Patients
+        // GET: Patient
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
@@ -22,7 +22,7 @@ namespace _3DCytoFlow.Controllers
             return RedirectToAction("LogIn", "Account");
         }
 
-        // GET: Patients/Details/5
+        // GET: Patient/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,7 +39,7 @@ namespace _3DCytoFlow.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Create
+        // GET: Patient/Create
         public ActionResult Create()
         {
             if (User.Identity.IsAuthenticated)
@@ -50,7 +50,7 @@ namespace _3DCytoFlow.Controllers
             return RedirectToAction("LogIn", "Account");
         }
 
-        // POST: Patients/Create
+        // POST: Patient/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,7 +68,7 @@ namespace _3DCytoFlow.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Edit/5
+        // GET: Patient/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,7 +85,7 @@ namespace _3DCytoFlow.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit/5
+        // POST: Patient/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -101,7 +101,7 @@ namespace _3DCytoFlow.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
+        // GET: Patient/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -118,7 +118,7 @@ namespace _3DCytoFlow.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Delete/5
+        // POST: Patient/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

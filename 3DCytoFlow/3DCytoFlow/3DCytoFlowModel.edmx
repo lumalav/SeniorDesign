@@ -39,7 +39,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Middle" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Middle" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DOB" Type="datetime" Nullable="false" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
@@ -62,7 +62,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Middle" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Middle" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DOB" Type="datetime" Nullable="false" />
           <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
@@ -173,7 +173,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FcsFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FcsUploadDate" Type="DateTime" Nullable="false" />
+          <Property Name="FcsUploadDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ResultFilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ResultDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Delta" Type="Double" Nullable="false" />
@@ -204,7 +204,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Middle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Middle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -230,7 +230,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Middle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+          <Property Name="Middle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -305,7 +305,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CytoFlowDBContext" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="CytoFlowDBContext2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Analyses" EntityType="Self.Analysis" />
           <EntitySet Name="Clusters" EntityType="Self.Cluster" />
           <EntitySet Name="Patients" EntityType="Self.Patient" />
@@ -337,7 +337,22 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DCytoFlowDBModelStoreContainer" CdmEntityContainer="CytoFlowDBContext">
+        <EntityContainerMapping StorageEntityContainer="DCytoFlowDBModelStoreContainer" CdmEntityContainer="CytoFlowDBContext2">
+          <EntitySetMapping Name="Analyses">
+            <EntityTypeMapping TypeName="DCytoFlowDBModel.Analysis">
+              <MappingFragment StoreEntitySet="Analyses">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="FcsFilePath" ColumnName="FcsFilePath" />
+                <ScalarProperty Name="FcsUploadDate" ColumnName="FcsUploadDate" />
+                <ScalarProperty Name="ResultFilePath" ColumnName="ResultFilePath" />
+                <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
+                <ScalarProperty Name="Delta" ColumnName="Delta" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Patient_Id" ColumnName="Patient_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Clusters">
             <EntityTypeMapping TypeName="DCytoFlowDBModel.Cluster">
               <MappingFragment StoreEntitySet="Clusters">
@@ -394,21 +409,6 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="UserRole_Id" ColumnName="UserRole_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Analyses">
-            <EntityTypeMapping TypeName="IsTypeOf(DCytoFlowDBModel.Analysis)">
-              <MappingFragment StoreEntitySet="Analyses">
-                <ScalarProperty Name="Patient_Id" ColumnName="Patient_Id" />
-                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
-                <ScalarProperty Name="Delta" ColumnName="Delta" />
-                <ScalarProperty Name="ResultDate" ColumnName="ResultDate" />
-                <ScalarProperty Name="ResultFilePath" ColumnName="ResultFilePath" />
-                <ScalarProperty Name="FcsUploadDate" ColumnName="FcsUploadDate" />
-                <ScalarProperty Name="FcsFilePath" ColumnName="FcsFilePath" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

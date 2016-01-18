@@ -1,118 +1,100 @@
-﻿@model IEnumerable<Analysis>
+﻿@using Microsoft.Ajax.Utilities
+@model IEnumerable<Analysis>
 
 @{
     ViewBag.Title = "Results";
+    var directory = "";
 }
-@section Style
-{
-    <link rel="stylesheet" type="text/css" href="~/Content/DataProjector.css">
-}
+
+<link rel="stylesheet" type="text/css" href="~/Content/stylish.css">
+<script src="~/Scripts/three.min.js"></script>
+<script src="~/Scripts/OrbitControls-Touch.js"></script>
+<script src="~/Scripts/rAF.js"></script>
+<script src="~/Scripts/lodash.min.js"></script>
+<script src="~/Scripts/semantic.min.js"></script>
+
 <div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">@ViewBag.Title</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <p>
-        @Html.ActionLink("Upload File", "UploadFile", "Account")
-    </p>
-@*    <table class="table">*@
-@*        <tr>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.Date)*@
-@*            </th>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.FcsFilePath)*@
-@*            </th>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.FcsUploadDate)*@
-@*            </th>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.ResultFilePath)*@
-@*            </th>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.ResultDate)*@
-@*            </th>*@
-@*            <th>*@
-@*                @Html.DisplayNameFor(model => model.Delta)*@
-@*            </th>*@
-@*            <th></th>*@
-@*        </tr>*@
-@**@
-@*        @foreach (var item in Model)*@
-@*        {*@
-@*            <tr>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.Date)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.FcsFilePath)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.FcsUploadDate)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.ResultFilePath)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.ResultDate)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.DisplayFor(modelItem => item.Delta)*@
-@*                </td>*@
-@*                <td>*@
-@*                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |*@
-@*                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})*@
-@*                </td>*@
-@*            </tr>*@
-@*        }*@
-    @*    </table>*@
-    <div id="bodyData" class="col-lg-12">
-        <div id="toolbarData">
-            Display:
-            <span class="button" id="menuButton">[M]enu</span>
-            <span class="button" id="infoButton">[I]nfo</span><br />
-            Camera:
-            <span class="button" id="perspectiveButton">[P]erspective</span>
-            <span class="button" id="orthographicButton">[O]rthographic</span>
-            <span class="button" id="dualButton">[D]ual</span>
-            <span class="button" id="resetButton">[R]eset</span><br />
-            Tools:
-            <span class="button" id="clearButton">[C]lear</span>
-            <span class="button" id="boxButton">[B]ox</span>
-            <span class="button" id="selectButton">[S]elect</span>
-            <span class="button" id="viewportButton">[V]iewport</span>
-            <span class="button" id="viewTopButton">[1]Top</span>
-            <span class="button" id="viewFrontButton">[2]Front</span>
-            <span class="button" id="viewSideButton">[3]Side</span>
-            <span class="button" id="spinLeftButton">[&lt;]Left</span>
-            <span class="button" id="spinStopButton">[ ]Stop</span>
-            <span class="button" id="spinRightButton">[&gt;]Right</span>
-            <span class="button" id="animateButton">[A]nimate</span>
-        </div>
-        <div id="menuData">
-            --- Main Menu ---<br /><br />
-            Clusters:<br /><br />
-            <span class="toggle" id="toggleAll">[+]</span>
-            <span class="button" id="buttonAll"> All</span><br />
-        </div>
-        <div id="infoData">
-            --- Info Console ---<br /><br />
-            <span id="messageData"></span><br />
+    <div id="body3">
+        <div class="form-group" id="analysisGroup">
+            <div class="label " id="label2">Patient's Name - Data Upload Date</div>
+            <div>
+                <select class="form-control" name="status" id="analysisSelect">
+                    
+                    @foreach (var analysis in Model.Where(analysis => analysis.ResultFilePath != null))
+                    {
+                        if (directory.IsNullOrWhiteSpace())
+                        {
+                            directory = analysis.User.LastName + "-" + analysis.User.FirstName + "-" + analysis.User.Id + "/";
+                        }
+
+                        var displayName = analysis.Patient.LastName + ", " + @analysis.Patient.FirstName + " - " + analysis.Date.ToString("MM-dd-yyyy");
+
+                        <option>@displayName</option>
+                    }
+
+                </select>
+            </div>
         </div>
 
-        <div id="containerData">
+        <div id="info-box" class="hidden">
+            <div class="ui segment">
+                <div class="ui green inverted statistic">
+                    <div id="statsSize" class="value">
+                        0
+                    </div>
+                    <div class="label">
+                        Points Plotted
+                    </div>
+                </div>
+                <div class="ui blue inverted statistic">
+                    <div id="clusterSize" class="value">
+                        0
+                    </div>
+                    <div class="label">
+                        Cluster
+                    </div>
+                </div>
+            </div>
+            <div class="ui divider"></div>
+            <i class="ui white big undo icon"></i>
+
+            <div class="ui inverted toggle checkbox">
+                <label id="rotateLabel">Rotate</label>
+                <input type="checkbox" name="rotateCheckbox" checked="checked" onClick="rotateToggle()">
+            </div>
+
+            <div class="ui divider"></div>
+            <div id="clusterInfo"></div>
+
         </div>
 
-        <div id="screenshotsData">
+        <i class="fixed big white info icon" id="infoButt"></i>
+
+        <!--PUSHER -->
+        <div class="pusher">
+            <canvas id="data-canvas"></canvas>
+            <div id="loader">
+                <div class="ui large indeterminate loader"></div>
+            </div>
         </div>
+
+        <script src="~/Scripts/dreda.js"></script>
+        <script src="~/Scripts/ui.js"></script>
+        <script>
+            $(document).ready(function () {
+                plot(getFile($('#analysisSelect').val()));
+
+                $('#analysisSelect').on('change', function () {
+                    plot(getFile(this.value));
+                });
+            });
+
+            function getFile(value) {
+                data = null;
+                return '@(directory)' + value.replace(/ /g, '').replace(",", "-").toLowerCase() + ".json";
+            }
+        </script>
     </div>
-    
-    @section Scripts{
-        <script src="~/Scripts/three.min.js"></script>
-        <script src="~/Scripts/TweenLite.min.js"></script>
-        <script src="~/Scripts/TrackballControls.js"></script>
-        <script src="~/Scripts/DataProjector.js"></script>
-    }
 </div>
+
+

@@ -8,19 +8,13 @@ namespace _3DCytoFlow.Controllers
     {
         private readonly CytoFlowDBContext _db = new CytoFlowDBContext();
 
-        // GET: Analyses
+        // GET: Analysis
         public ActionResult Index()
         {
             return View(_db.Analyses.ToList());
         }
 
-        // GET: Analyses
-        public ActionResult Index2()
-        {
-            return View(_db.Analyses.ToList());
-        }
-
-        // GET: Analyses/Details/5
+        // GET: Analysis/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +31,7 @@ namespace _3DCytoFlow.Controllers
             return View(analysis);
         }
 
-        // GET: Analyses/Delete/5
+        // GET: Analysis/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -54,7 +48,7 @@ namespace _3DCytoFlow.Controllers
             return View(analysis);
         }
 
-        // POST: Analyses/Delete/5
+        // POST: Analysis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

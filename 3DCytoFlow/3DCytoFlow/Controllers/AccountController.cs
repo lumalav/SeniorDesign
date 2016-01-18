@@ -103,7 +103,7 @@ namespace _3DCytoFlow.Controllers
             {
                 case SignInStatus.Success:
                     //if we got to this point, we could download all the results
-                    DownloadResults(user);
+         //           DownloadResults(user);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
