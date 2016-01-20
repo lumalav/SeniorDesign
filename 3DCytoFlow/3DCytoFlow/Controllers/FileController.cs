@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace _3DCytoFlow.Controllers
 {
@@ -22,8 +17,6 @@ namespace _3DCytoFlow.Controllers
         [ValidateInput(false)]
         public ActionResult DownloadResult(string path)
         {
-            object result = null;
-            dynamic stuff = null;
             var jsonString = "";
             //prepare container name
             var index = path.IndexOf('/');
@@ -57,7 +50,7 @@ namespace _3DCytoFlow.Controllers
                     {                        
                         using (var jsonTextReader = new JsonTextReader(sr))
                         {
-                            result = serializer.Deserialize(jsonTextReader);
+                            var result = serializer.Deserialize(jsonTextReader);
                             jsonString = JsonConvert.SerializeObject(result);
                         }
                     }

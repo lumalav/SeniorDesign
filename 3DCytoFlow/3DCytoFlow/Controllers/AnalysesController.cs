@@ -11,9 +11,16 @@ namespace _3DCytoFlow.Controllers
         // GET: Analysis
         public ActionResult Index()
         {
-            return View(_db.Analyses.ToList());
-        }
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = GetUser();
 
+                return View(user.Analyses.ToList());
+            }
+
+            return RedirectToAction("LogIn", "Account"); 
+        }
+        
         // GET: Analysis/Details/5
         public ActionResult Details(int? id)
         {
@@ -61,6 +68,15 @@ namespace _3DCytoFlow.Controllers
             return RedirectToAction("Index");
         }
 
+        #region Helpers
+        /// <summary>
+        /// returns the current user
+        /// </summary>
+        /// <returns></returns>
+        private User GetUser()
+        {
+            return _db.Users.First(i => i.Email.Equals(User.Identity.Name));
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -69,5 +85,6 @@ namespace _3DCytoFlow.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }
