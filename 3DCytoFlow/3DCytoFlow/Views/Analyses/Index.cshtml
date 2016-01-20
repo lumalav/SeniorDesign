@@ -13,6 +13,14 @@
 <script src="~/Scripts/lodash.min.js"></script>
 <script src="~/Scripts/semantic.min.js"></script>
 <link rel="stylesheet" type="text/css" href="~/Content/semantic.min.css">
+<style>
+    div#loader {
+        margin-left: 250px;
+    }
+    div.ui.large.indeterminate.loader::after, div.ui.large.indeterminate.loader::before {
+        margin-left: -250px;
+    }
+</style>
 <div id="page-wrapper">
     <div id="body3">
         <div class="form-group" id="analysisGroup">
@@ -94,15 +102,13 @@
 
             function DownloadCurrentResult() {
 
-                window.showLoadingScreen();
+                $("#loader").addClass("ui active dimmer");
 
                 $.ajax({
                     type: "POST",
                     async: true,
                     url: "/File/DownloadResult?path=" + getPath($('#analysisSelect').val())
                 }).done(function (model) {
-
-                    $("#loading").remove();
 
                     if (model !== undefined && model !== "") {
                         data = JSON.parse(model);
@@ -111,7 +117,7 @@
                         alert("This file is corrupted");
                     }
                 }).fail(function () {
-                    $("#loading").remove();
+                    $("#loader").removeClass("ui active dimmer");
                     alert("failed");
                 });
             }

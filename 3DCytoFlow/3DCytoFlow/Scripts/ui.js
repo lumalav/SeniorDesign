@@ -18,7 +18,6 @@ var fileInput = $("#fileInput");
 function hideAndLoad() {
     $(".ui.modal").modal("hide");
     $(".ui.sidebar").sidebar("hide");
-    $("#loader").addClass("ui active dimmer");
 }
 
 function plot() {
