@@ -20,14 +20,13 @@ function hideAndLoad() {
     $(".ui.sidebar").sidebar("hide");
     $("#loader").addClass("ui active dimmer");
 }
-function plot(name) {
+
+function plot() {
 
     setTimeout(function () {
-
-        fetchData(name);
-
+       
         if (!plotData()) {
-           alert("This file is corrupted or does not exist");
+           alert("This file is corrupted");
             return;
         }
 

@@ -19,19 +19,20 @@
             <div class="label " id="label2">Patient's Name - Data Upload Date</div>
             <div>
                 <select class="form-control" name="status" id="analysisSelect">
-                    
+
                     @foreach (var analysis in Model.Where(analysis => analysis.ResultFilePath != null))
                     {
                         if (directory.IsNullOrWhiteSpace())
                         {
                             directory = analysis.User.LastName + "-" + analysis.User.FirstName + "-" + analysis.User.Id + "/";
+                            directory = directory.ToLower();
                         }
 
-                        var displayName = analysis.Patient.LastName + ", " + @analysis.Patient.FirstName + " - " + analysis.Date.ToString("MM-dd-yyyy");
+                        var displayName = analysis.Patient.LastName + ", " + analysis.Patient.FirstName + " | " + analysis.Date.ToString("MM-dd-yyyy");
 
                         <option>@displayName</option>
                     }
-
+                    
                 </select>
             </div>
         </div>
@@ -82,16 +83,43 @@
         <script src="~/Scripts/ui.js"></script>
         <script>
             $(document).ready(function () {
-                plot(getFile($('#analysisSelect').val()));
+
+                DownloadCurrentResult();
 
                 $('#analysisSelect').on('change', function () {
-                    plot(getFile(this.value));
+                    DownloadCurrentResult();
                 });
+
             });
 
-            function getFile(value) {
+            function DownloadCurrentResult() {
+
+                window.showLoadingScreen();
+
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "/File/DownloadResult?path=" + getPath($('#analysisSelect').val())
+                }).done(function (model) {
+
+                    $("#loading").remove();
+
+                    if (model !== undefined && model !== "") {
+                        data = JSON.parse(model);
+                        plot(data);
+                    } else {
+                        alert("This file is corrupted");
+                    }
+                }).fail(function () {
+                    $("#loading").remove();
+                    alert("failed");
+                });
+            }
+
+            //get the right name of the blob
+            function getPath(value) {
                 data = null;
-                return '@(directory)' + value.replace(/ /g, '').replace(",", "-").toLowerCase() + ".json";
+                return '@(directory)' + value.replace(/ /g, '').replace(",", "-").replace("|", "/").toLowerCase() + ".json";
             }
         </script>
     </div>

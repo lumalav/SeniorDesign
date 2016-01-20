@@ -193,15 +193,6 @@ function resetCamera() {
 ///////
 ///////
 
-function fetchData(name) {
-    $.ajaxSetup({ 'async': false });
-
-    $.getJSON("../Results/" + name, function (json) {
-        data = json;
-    });
-    console.log("Data Fetched");
-}
-
 function loadData() {
 
     // clear container
